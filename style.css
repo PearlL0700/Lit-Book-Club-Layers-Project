@@ -1,15 +1,11 @@
-/*body{
-    background-color: #646464;
-    text-align: center;
-    canvas
-    {
-        background: url("Island.png") no-repeat;
-        background-size: cover;
-        border: 2px solid black;
-        position: relative;
-    }
-}*/
+/* Make the entire page fill screen and remove white borders */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
 
+/* Headings styling (your originals) */
 h1{
     text-align: center;
     font-size: 50px;
@@ -39,32 +35,63 @@ h6{
     font-weight: lighter;
 }
 
+/* FULLSCREEN background */
 .woods-bg{
-    margin: 0;
-    padding: 0;
-    background-image: url("./images/woods-bg.jpg");
-    background-size: contain;
-    background-repeat: no-repeat;
-    width: 1500px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
     height: 100vh;
-    /*position: relative;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;*/
+
+    background-image: url("./images/woods-bg.jpg");
+    background-size: cover;      /* fills entire screen */
+    background-position: center;
+    background-repeat: no-repeat;
+
+    z-index: -1;                 /* behind everything */
 }
 
+/* Title centered at top */
+.title-container {
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    text-align: center;
+    color: white;
+    z-index: 2;
+}
+
+.title-container h1 {
+    font-size: 60px;
+    margin: 0;
+    text-shadow: 2px 2px 5px black;
+}
+
+.title-container h3 {
+    font-size: 28px;
+    margin-top: 10px;
+    text-shadow: 1px 1px 3px black;
+}
+
+/* Optional plane (you had this already) */
 .warPlane{
     width: 500px;
     height: 350px;
     position: absolute;
     top: 450px;
     right: 420px;
+    z-index: 1;
 }
 
+/* Button */
 .butt1{
     width: 200px;
     height: 100px;
     position: absolute;
     top: 700px;
     right: 220px;
+    z-index: 1;
+    cursor: pointer;
 }
