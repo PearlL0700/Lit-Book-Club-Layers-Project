@@ -274,7 +274,13 @@
 
     document.getElementById("MOTIF5").onclick = () => {
         if (checkCollision(characterRect, 275, 400, 90, 175))
-            location.href = "./back.html";
+            location.href = "./bag.html";
+        else alert("Stickman is not touching a button!");
+    };
+
+    document.getElementById("next").onclick = () => {
+        if (checkCollision(characterRect, 640, 770, 80, 160))
+            location.href = "./IOTW.html";
         else alert("Stickman is not touching a button!");
     };
 </script>

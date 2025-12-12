@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <style>
+        .butt{
+            width: 200px;
+            height: 100px;
+            position: absolute;
+            top: 600px;
+            right: 220px;
+            z-index: 1;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    
+    <h2> IOTW</h2>
+    <h6> Throughout <i>God of the Woods</i>, Liz Moore uses the evolving motifs of the woods, camp safety rules, 
+        performance, hunger, and concealed evidence to reveal that danger does not originate in the natural 
+        world but in the social systems meant to protect children. As setting, tone, and characterization shift 
+        across these motifs, moments that appear harmless become sites where adults misinterpret, neglect, or 
+        actively distort the truth. Moore demonstrates that harm arises when institutions prioritize image over 
+        honesty, routine over responsibility, and self-preservation over care. The novel ultimately argues that 
+        genuine safety comes not from rules, rituals, or appearances but from adults who are willing to see children 
+        clearly, respond with integrity, and confront the uncomfortable realities they have long avoided.
+    </h6>
+    <img id = "butt" src = "./images/Butt1.png" class = "butt"/>
+    <script>
+        document.getElementById('butt').addEventListener('click', function (){
+            window.location.href = "./nav.html"
+        });
+    </script>
+
+</body>
+</html>
