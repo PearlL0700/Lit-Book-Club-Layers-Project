@@ -12,7 +12,7 @@
     <div class="woods-bg"></div>
 
     <!-- Title + Author -->
-    <div class="title-container">
+<div class="title-container forest-title">
         <h1>The God of the Woods</h1>
         <h3>By: Pearl Lam and Zaeem Alam</h3>
     </div>
@@ -25,6 +25,14 @@
             window.location.href = "./intro.html";
         });
     </script>
+<script>
+document.addEventListener("mousemove", (e) => {
+    const x = (e.clientX / window.innerWidth - 0.5) * 4;
+    const y = (e.clientY / window.innerHeight - 0.5) * 4;
 
+    document.documentElement.style.setProperty("--tiltY", x + "deg");
+    document.documentElement.style.setProperty("--tiltX", -y + "deg");
+});
+</script>
 </body>
 </html>

@@ -105,3 +105,86 @@ h6{
     z-index: 1;
     cursor: pointer;
 }
+body.motif {
+    background: radial-gradient(
+        circle at 35% 20%,
+        rgb(238, 242, 232) 0%,
+        rgb(212, 221, 201) 50%,
+        rgb(182, 196, 168) 100%
+    );
+    background-attachment: fixed;
+}
+.title-container.forest-title h1,
+.title-container.forest-title h3 {
+    opacity: 0;
+}
+
+/* Strong, obvious glow + zoom for main title */
+.title-container.forest-title h1 {
+    animation: 
+        titleGlowIn 2.2s ease-out forwards,
+        breathing 8s ease-in-out infinite 2.4s;
+}
+
+.title-container.forest-title h3 {
+    animation: 
+        subtitleGlowIn 1.8s ease-out forwards 1.1s,
+        breathing 10s ease-in-out infinite 3s;
+}
+
+/* Main title animation */
+@keyframes titleGlowIn {
+    0% {
+        opacity: 0;
+        filter: blur(8px);
+        transform: scale(0.7) translateY(20px);
+        text-shadow:
+            0 0 8px rgba(200, 255, 200, 0.4),
+            0 0 16px rgba(160, 220, 170, 0.3);
+    }
+    50% {
+        opacity: 1;
+        filter: blur(0px);
+        transform: scale(1.08) translateY(0);
+        text-shadow:
+            0 0 25px rgba(220, 255, 220, 0.9),
+            0 0 55px rgba(190, 240, 200, 0.85);
+    }
+    100% {
+        opacity: 1;
+        filter: blur(0px);
+        transform: scale(1);
+        text-shadow:
+            0 0 18px rgba(210, 250, 210, 0.8);
+    }
+}
+
+/* Subtitle animation — softer but still visible */
+@keyframes subtitleGlowIn {
+    0% {
+        opacity: 0;
+        filter: blur(4px);
+        transform: translateY(10px);
+        text-shadow:
+            0 0 4px rgba(220, 255, 220, 0.3);
+    }
+    100% {
+        opacity: 1;
+        filter: blur(0px);
+        transform: translateY(0);
+        text-shadow:
+            0 0 10px rgba(210, 250, 210, 0.6);
+    }
+    
+}
+@keyframes breathing {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.012);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
