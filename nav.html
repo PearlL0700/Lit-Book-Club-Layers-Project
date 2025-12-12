@@ -1,174 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Navigation</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Navigation</title>
 
-    <style>
-        body {
-            text-align: center;
-            background-color: #646464;
-            position: relative;
-        }
+  <style>
+    body {
+      margin: 0;
+      text-align: center;
+      background-color: #646464;
+    }
 
-        canvas {
-            background: url("./images/cabin.png") no-repeat center center;
-            background-size: 100% 100%;
-            border: 2px solid black;
-            display: block;
-            margin: 0 auto;
-            transform: scale(1.1);
-            transform-origin: top center;
-        }
+    /* NEW: wrapper that defines the coordinate system */
+    #stage {
+      position: relative;          /* <-- makes children absolute relative to this */
+      display: inline-block;       /* shrink-wrap to canvas size */
+      margin: 0 auto;
+      transform: scale(1.1);       /* <-- scale EVERYTHING together */
+      transform-origin: top center;
+    }
 
-        img {
-            cursor: pointer;
-            border: none;
-            background: none;
-            position: absolute;
-        }
+    canvas {
+      display: block;              /* remove inline-gap */
+      border: 2px solid black;
+      background: url("./images/cabin.png") no-repeat center center;
+      background-size: 100% 100%;
+    }
 
-        /* ---- A1 (LEFT HALF ONLY, BIGGER + CENTERED ON MOTIF1) ---- */
+    /* All overlays positioned relative to #stage now */
+    #stage img {
+      cursor: pointer;
+      border: none;
+      background: none;
+      position: absolute;
+    }
 
-        /* MOTIF1 position for reference:
-           top: 270px;
-           left: 1042px;
-           width: 160px;
-           height: 430px;
-           center = (1122px, 485px)
-        */
+    /* A1 wrapper must also be absolute relative to #stage */
+    #A1wrapper {
+      position: absolute;
+      top: 120px;
+      left: 650px;
+      width: 240px;
+      height: 480px;
+      overflow: hidden;
+    }
 
-        /* A1 full image = 300x300
-           Only left half shown = 150px width
-           Centered around MOTIF1 center → wrapper at (1047px, 335px)
-        */
+    #A1 {
+      width: 480px;
+      height: 480px;
+      position: absolute;
+      left: 0;
+      top: 0;
+      object-fit: cover;
+    }
 
-        #A1wrapper {
-            position: absolute;
-            top: 235px;     /* centered vertically */
-            left: 960px;
-            
-            width: 240px;    /* half of A1 width */
-            height: 480px;   /* full height */
-            overflow: hidden;
-        }
+    /* ---- MOTIF1 ---- */
+    #MOTIF1 {
+      top: 165px;
+      left: 732px;
+      width: 160px;
+      height: 430px;
+    }
 
-        #A1 {
-            width: 480px;
-            height: 480px;
-            position: absolute;
-            left: 0;   /* only show left half */
-            top: 0;
-            object-fit: cover;
-        }
+    #A2 { top: 215px; left: 435px; width: 140px; height: 140px; }
+    #MOTIF2 { top: 245px; left: 475px; width: 62px; height: 80px; }
 
-        /* ---- MOTIF1 ---- */
-        #MOTIF1 {
-            top: 270px;
-            left: 1042px;
-            width: 160px;
-            height: 430px;
-        }
+    #A3 { top: 195px; left: 97px; width: 140px; height: 140px; }
+    #MOTIF3 { top: 235px; left: 125px; width: 90px; height: 60px; }
 
-        /* Remaining aura hitboxes and motifs */
-        #A2 {
-            top: 300px;
-            left: 718px;
-            width: 140px;
-            height: 140px;
-        }
-        #MOTIF2 {
-            top: 335px;
-            left: 755px;
-            width: 62px;
-            height: 80px;
-        }
+    #A4 { top: 350px; left: 280px; width: 90px; height: 90px; }
+    #MOTIF4 { top: 385px; left: 290px; width: 70px; height: 30px; }
 
-        #A3 {
-            top: 295px;
-            left: 337px;
-            width: 140px;
-            height: 140px;
-        }
-        #MOTIF3 {
-            top: 340px;
-            left: 360px;
-            width: 90px;
-            height: 60px;
-        }
+    #A5 { top: 115px; left: 320px; width: 120px; height: 120px; }
+    #MOTIF5 { top: 150px; left: 340px; width: 90px; height: 50px; }
 
-        #A4 {
-            top: 447px;
-            left: 517px;
-            width: 90px;
-            height: 90px;
-        }
-        #MOTIF4 {
-            top: 480px;
-            left: 530px;
-            width: 70px;
-            height: 30px;
-        }
-
-        #A5 {
-            top: 177px;
-            left: 565px;
-            width: 120px;
-            height: 120px;
-        }
-        #MOTIF5 {
-            top: 210px;
-            left: 580px;
-            width: 90px;
-            height: 50px;
-        }
-        #iotw{
-            top: 230px;
-            left: 980px;
-            width: 110px;
-            height: 50px;
-        }
-        #intro{
-            top: 170px;
-            left: 980px;
-            width: 110px;
-            height: 50px;
-        }
-    </style>
+    #iotw { top: 160px; left: 685px; width: 110px; height: 50px; }
+    #intro { top: 100px; left: 685px; width: 110px; height: 50px; }
+  </style>
 </head>
 
 <body>
+  <h1>Museum: Motifs Across <i>God of the Woods</i></h1>
 
-<h1>Museum: Motifs Across <i> God of the Woods</i></h1>
+  <!-- NEW: everything that should align with canvas goes inside #stage -->
+  <div id="stage">
+    <canvas id="gameCanvas"></canvas>
 
-<canvas id="gameCanvas"></canvas>
+    <!-- A1 (half clipped) -->
+    <div id="A1wrapper">
+      <img id="A1" src="./images/aura.png" alt="Aura">
+    </div>
 
-<!-- A1 (half clipped, large, centered on MOTIF1) -->
-<div id="A1wrapper">
-    <img id="A1" src="./images/aura.png" alt="Aura">
-</div>
+    <img id="MOTIF1" src="./images/woods.png" alt="Tree Button">
 
-<img id="MOTIF1" src="./images/woods.png" alt="Tree Button">
+    <img id="A2" src="./images/aura.png" alt="Aura">
+    <img id="MOTIF2" src="./images/rule.png" alt="Rule Button">
 
-<!-- Other A-areas + MOTIFs -->
-<img id="A2" src="./images/aura.png" alt="Aura">
-<img id="MOTIF2" src="./images/rule.png" alt="Rule Button">
+    <img id="A3" src="./images/aura.png" alt="Aura">
+    <img id="MOTIF3" src="./images/mask.png" alt="Mask Button">
 
-<img id="A3" src="./images/aura.png" alt="Aura">
-<img id="MOTIF3" src="./images/mask.png" alt="Mask Button">
+    <img id="A4" src="./images/aura.png" alt="Aura">
+    <img id="MOTIF4" src="./images/bread.png" alt="Bread Button">
 
-<img id="A4" src="./images/aura.png" alt="Aura">
-<img id="MOTIF4" src="./images/bread.png" alt="Bread Button">
+    <img id="A5" src="./images/aura.png" alt="Aura">
+    <img id="MOTIF5" src="./images/bag.png" alt="Bag Button">
 
-<img id="A5" src="./images/aura.png" alt="Aura">
-<img id="MOTIF5" src="./images/bag.png" alt="Bag Button">
+    <img id="iotw" src="./images/iotw.png" alt="iotw">
+    <img id="intro" src="./images/intro.png" alt="intro">
+  </div>
 
-<img id="iotw" src="./images/iotw.png" alt="iotw">
-<img id="intro" src="./images/intro.png" alt="intro">
-
-<script>
-    // Canvas setup
+  <script>
+    const stage = document.getElementById("stage");
     const canvas = document.getElementById("gameCanvas");
     const ctx = canvas.getContext("2d");
 
@@ -178,111 +121,67 @@
     const sprite = new Image();
     sprite.src = "./images/stickman.png";
 
-    const sm = {
-        x: 355,
-        y: 535,
-        width: 60,
-        height: 60
-    };
+    const sm = { x: 355, y: 535, width: 60, height: 60 };
 
     let Xspeed = 0, Yspeed = 0;
     let moveUp = false, moveDown = false, moveLeft = false, moveRight = false;
 
-    let characterRect = {top: 0, bottom: 0, left: 0, right: 0};
+    bg.onload = function () {
+      canvas.width = bg.width;
+      canvas.height = bg.height;
 
-    bg.onload = function() {
-        canvas.width = bg.width;
-        canvas.height = bg.height;
-        update();
+      // IMPORTANT: match stage to canvas so overlay coords = canvas coords
+      stage.style.width = canvas.width + "px";
+      stage.style.height = canvas.height + "px";
+
+      update();
     };
 
-    // Movement keys
     window.addEventListener("keydown", e => {
-        if (e.key === "ArrowUp") moveUp = true;
-        if (e.key === "ArrowDown") moveDown = true;
-        if (e.key === "ArrowLeft") moveLeft = true;
-        if (e.key === "ArrowRight") moveRight = true;
+      if (e.key === "ArrowUp") moveUp = true;
+      if (e.key === "ArrowDown") moveDown = true;
+      if (e.key === "ArrowLeft") moveLeft = true;
+      if (e.key === "ArrowRight") moveRight = true;
+
+      if (e.code === "Space") {
+        alert("Stickman Position:\nX = " + sm.x + "\nY = " + sm.y);
+      }
     });
 
     window.addEventListener("keyup", e => {
-        if (e.key === "ArrowUp") moveUp = false;
-        if (e.key === "ArrowDown") moveDown = false;
-        if (e.key === "ArrowLeft") moveLeft = false;
-        if (e.key === "ArrowRight") moveRight = false;
-    });
-
-    // Spacebar: print x/y
-    window.addEventListener("keydown", e => {
-        if (e.code === "Space") {
-            alert("Stickman Position:\nX = " + sm.x + "\nY = " + sm.y);
-        }
+      if (e.key === "ArrowUp") moveUp = false;
+      if (e.key === "ArrowDown") moveDown = false;
+      if (e.key === "ArrowLeft") moveLeft = false;
+      if (e.key === "ArrowRight") moveRight = false;
     });
 
     function update() {
-        requestAnimationFrame(update);
+      requestAnimationFrame(update);
 
-        Xspeed = (moveLeft ? -5 : 0) + (moveRight ? 5 : 0);
-        Yspeed = (moveUp ? -5 : 0) + (moveDown ? 5 : 0);
+      Xspeed = (moveLeft ? -5 : 0) + (moveRight ? 5 : 0);
+      Yspeed = (moveUp ? -5 : 0) + (moveDown ? 5 : 0);
 
-        sm.x += Xspeed;
-        sm.y += Yspeed;
+      sm.x += Xspeed;
+      sm.y += Yspeed;
 
-        sm.x = Math.max(0, Math.min(sm.x, canvas.width - sm.width));
-        sm.y = Math.max(0, Math.min(sm.y, canvas.height - sm.height));
+      sm.x = Math.max(0, Math.min(sm.x, canvas.width - sm.width));
+      sm.y = Math.max(0, Math.min(sm.y, canvas.height - sm.height));
 
-        characterRect = {
-            top: sm.y,
-            bottom: sm.y + sm.height,
-            left: sm.x,
-            right: sm.x + sm.width
-        };
-
-        render();
+      render();
     }
 
     function render() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(sprite, sm.x, sm.y, sm.width, sm.height);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(sprite, sm.x, sm.y, sm.width, sm.height);
     }
 
-    function checkCollision(rect, x1, x2, y1, y2) {
-        return (
-            rect.right >= x1 &&
-            rect.left <= x2 &&
-            rect.bottom >= y1 &&
-            rect.top <= y2
-        );
-    }
-
-    // MOTIF click collisions
-    document.getElementById("MOTIF1").onclick = () => {
-        location.href = "./woods.html";
-    };
-
-    document.getElementById("MOTIF2").onclick = () => {
-        location.href = "./rules.html";
-    };
-
-    document.getElementById("MOTIF3").onclick = () => {
-        location.href = "./masks.html";
-    };
-
-    document.getElementById("MOTIF4").onclick = () => {
-        location.href = "./bread.html";
-    };
-
-    document.getElementById("MOTIF5").onclick = () => {
-        location.href = "./bag.html";
-    };
-
-    document.getElementById("iotw").onclick = () => {
-        location.href = "./IOTW.html";
-    };
-
-    document.getElementById("intro").onclick = () => {
-        location.href = "./Intro.html";
-    };
-</script>
-
+    document.getElementById("MOTIF1").onclick = () => location.href = "./woods.html";
+    document.getElementById("MOTIF2").onclick = () => location.href = "./rules.html";
+    document.getElementById("MOTIF3").onclick = () => location.href = "./masks.html";
+    document.getElementById("MOTIF4").onclick = () => location.href = "./bread.html";
+    document.getElementById("MOTIF5").onclick = () => location.href = "./bag.html";
+    document.getElementById("iotw").onclick   = () => location.href = "./IOTW.html";
+    document.getElementById("intro").onclick  = () => location.href = "./Intro.html";
+  </script>
 </body>
 </html>
