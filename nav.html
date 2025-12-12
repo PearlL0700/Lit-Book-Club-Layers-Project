@@ -123,6 +123,12 @@
             width: 90px;
             height: 50px;
         }
+        #next{
+            top: 200px;
+            left: 980px;
+            width: 100px;
+            height: 50px;
+        }
     </style>
 </head>
 
@@ -151,6 +157,8 @@
 
 <img id="A5" src="./images/aura.png" alt="Aura">
 <img id="MOTIF5" src="./images/bag.png" alt="Bag Button">
+
+<img id="next" src="./images/next.png" alt="Next">
 
 <script>
     // Canvas setup
@@ -242,31 +250,31 @@
     // MOTIF click collisions
     document.getElementById("MOTIF1").onclick = () => {
         if (checkCollision(characterRect, 700, 835, 180, 495))
-            location.href = "./LOTF.html";
+            location.href = "./woods.html";
         else alert("Stickman is not touching a button!");
     };
 
     document.getElementById("MOTIF2").onclick = () => {
         if (checkCollision(characterRect, 425, 540, 205, 310))
-            location.href = "./Ender's%20Game.html";
+            location.href = "./rules.html";
         else alert("Stickman is not touching a button!");
     };
 
     document.getElementById("MOTIF3").onclick = () => {
         if (checkCollision(characterRect, 70, 190, 195, 305))
-            location.href = "./naruto.html";
+            location.href = "./masks.html";
         else alert("Stickman is not touching a button!");
     };
 
     document.getElementById("MOTIF4").onclick = () => {
         if (checkCollision(characterRect, 225, 320, 324, 400))
-            location.href = "./Salem%20Witch%20Trials.html";
+            location.href = "./bread.html";
         else alert("Stickman is not touching a button!");
     };
 
     document.getElementById("MOTIF5").onclick = () => {
         if (checkCollision(characterRect, 275, 400, 90, 175))
-            location.href = "./intro.html";
+            location.href = "./back.html";
         else alert("Stickman is not touching a button!");
     };
 </script>
