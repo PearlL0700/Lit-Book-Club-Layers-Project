@@ -12,7 +12,6 @@
             position: relative;
         }
 
-        /* Canvas scaled 1.1x */
         canvas {
             background: url("./images/cabin.png") no-repeat center center;
             background-size: 100% 100%;
@@ -23,23 +22,61 @@
             transform-origin: top center;
         }
 
-        /* Button Styling */
         img {
             cursor: pointer;
             border: none;
             background: none;
-            /*width: 100px;
-            height: 50px;*/
             position: absolute;
         }
 
-        /* Button Positions (same as before — based on original canvas size) */
+        /* ---- A1 (LEFT HALF ONLY, BIGGER + CENTERED ON MOTIF1) ---- */
 
+        /* MOTIF1 position for reference:
+           top: 270px;
+           left: 1042px;
+           width: 160px;
+           height: 430px;
+           center = (1122px, 485px)
+        */
+
+        /* A1 full image = 300x300
+           Only left half shown = 150px width
+           Centered around MOTIF1 center → wrapper at (1047px, 335px)
+        */
+
+        #A1wrapper {
+            position: absolute;
+            top: 235px;     /* centered vertically */
+            left: 960px;
+            
+            width: 240px;    /* half of A1 width */
+            height: 480px;   /* full height */
+            overflow: hidden;
+        }
+
+        #A1 {
+            width: 480px;
+            height: 480px;
+            position: absolute;
+            left: 0;   /* only show left half */
+            top: 0;
+            object-fit: cover;
+        }
+
+        /* ---- MOTIF1 ---- */
         #MOTIF1 {
-            top: 380px;
-            left: 1050px;
-            width: 110px;
-            height: 110px;
+            top: 270px;
+            left: 1042px;
+            width: 160px;
+            height: 430px;
+        }
+
+        /* Remaining aura hitboxes and motifs */
+        #A2 {
+            top: 300px;
+            left: 718px;
+            width: 140px;
+            height: 140px;
         }
         #MOTIF2 {
             top: 335px;
@@ -47,11 +84,25 @@
             width: 62px;
             height: 80px;
         }
+
+        #A3 {
+            top: 295px;
+            left: 337px;
+            width: 140px;
+            height: 140px;
+        }
         #MOTIF3 {
             top: 340px;
             left: 360px;
             width: 90px;
             height: 60px;
+        }
+
+        #A4 {
+            top: 447px;
+            left: 517px;
+            width: 90px;
+            height: 90px;
         }
         #MOTIF4 {
             top: 480px;
@@ -59,15 +110,18 @@
             width: 70px;
             height: 30px;
         }
+
+        #A5 {
+            top: 177px;
+            left: 565px;
+            width: 120px;
+            height: 120px;
+        }
         #MOTIF5 {
             top: 210px;
             left: 580px;
             width: 90px;
             height: 50px;
-        }
-        #S {
-            top: 180px;
-            left: 260px;
         }
     </style>
 </head>
@@ -78,16 +132,28 @@
 
 <canvas id="gameCanvas"></canvas>
 
-<!-- Buttons -->
-<img id="MOTIF1" src="./images/tree.png" alt="Tree Button">
+<!-- A1 (half clipped, large, centered on MOTIF1) -->
+<div id="A1wrapper">
+    <img id="A1" src="./images/aura.png" alt="Aura">
+</div>
+
+<img id="MOTIF1" src="./images/woods.png" alt="Tree Button">
+
+<!-- Other A-areas + MOTIFs -->
+<img id="A2" src="./images/aura.png" alt="Aura">
 <img id="MOTIF2" src="./images/rule.png" alt="Rule Button">
+
+<img id="A3" src="./images/aura.png" alt="Aura">
 <img id="MOTIF3" src="./images/mask.png" alt="Mask Button">
+
+<img id="A4" src="./images/aura.png" alt="Aura">
 <img id="MOTIF4" src="./images/bread.png" alt="Bread Button">
+
+<img id="A5" src="./images/aura.png" alt="Aura">
 <img id="MOTIF5" src="./images/bag.png" alt="Bag Button">
-<!--img id="S" src="./images/Synthesis.png" alt="Synthesis Button">-->
 
 <script>
-    // Canvas + character setup
+    // Canvas setup
     const canvas = document.getElementById("gameCanvas");
     const ctx = canvas.getContext("2d");
 
@@ -109,14 +175,13 @@
 
     let characterRect = {top: 0, bottom: 0, left: 0, right: 0};
 
-    // Resize canvas to EXACT background image size
     bg.onload = function() {
         canvas.width = bg.width;
         canvas.height = bg.height;
         update();
     };
 
-    // Key controls
+    // Movement keys
     window.addEventListener("keydown", e => {
         if (e.key === "ArrowUp") moveUp = true;
         if (e.key === "ArrowDown") moveDown = true;
@@ -131,10 +196,11 @@
         if (e.key === "ArrowRight") moveRight = false;
     });
 
+    // Spacebar: print x/y
     window.addEventListener("keydown", e => {
-    if (e.code === "Space") {
-        alert("Stickman Position:\nX = " + sm.x + "\nY = " + sm.y);
-    }
+        if (e.code === "Space") {
+            alert("Stickman Position:\nX = " + sm.x + "\nY = " + sm.y);
+        }
     });
 
     function update() {
@@ -146,7 +212,6 @@
         sm.x += Xspeed;
         sm.y += Yspeed;
 
-        // Keep inside canvas
         sm.x = Math.max(0, Math.min(sm.x, canvas.width - sm.width));
         sm.y = Math.max(0, Math.min(sm.y, canvas.height - sm.height));
 
@@ -165,7 +230,6 @@
         ctx.drawImage(sprite, sm.x, sm.y, sm.width, sm.height);
     }
 
-    // Button collision check helper
     function checkCollision(rect, x1, x2, y1, y2) {
         return (
             rect.right >= x1 &&
@@ -175,9 +239,9 @@
         );
     }
 
-    // Button events
+    // MOTIF click collisions
     document.getElementById("MOTIF1").onclick = () => {
-        if (checkCollision(characterRect, 700, 835, 250, 384))
+        if (checkCollision(characterRect, 700, 835, 180, 495))
             location.href = "./LOTF.html";
         else alert("Stickman is not touching a button!");
     };
@@ -203,12 +267,6 @@
     document.getElementById("MOTIF5").onclick = () => {
         if (checkCollision(characterRect, 275, 400, 90, 175))
             location.href = "./intro.html";
-        else alert("Stickman is not touching a button!");
-    };
-
-    document.getElementById("S").onclick = () => {
-        if (checkCollision(characterRect, 430, 520, 330, 385))
-            location.href = "./Synthesis.html";
         else alert("Stickman is not touching a button!");
     };
 </script>
