@@ -114,141 +114,62 @@ body.motif {
     );
     background-attachment: fixed;
 }
-.forest-title {
+.title-container.forest-title h1,
+.title-container.forest-title h3 {
     opacity: 0;
-    transform: scale(0.8) translateY(20px);
-    animation: forestReveal 2s ease-out forwards;
 }
 
-.forest-title h1 {
-    text-shadow: 0 0 20px rgba(130, 160, 120, 0.35),
-                 0 0 40px rgba(160, 200, 150, 0.25);
+/* Strong, obvious glow + zoom for main title */
+.title-container.forest-title h1 {
+    animation: titleGlowIn 2.2s ease-out forwards;
 }
 
-.forest-title h3 {
-    opacity: 0;
-    animation: subtitleFade 2s ease-out forwards 1s; /* delay for nice effect */
+/* Subtitle comes in slightly later */
+.title-container.forest-title h3 {
+    animation: subtitleGlowIn 1.8s ease-out forwards 1.1s;
 }
 
-@keyframes forestReveal {
-    0% {
-        opacity: 0;
-        transform: scale(0.8) translateY(30px);
-    }
-    40% {
-        opacity: 1;
-        transform: scale(1.05) translateY(0);
-        text-shadow: 0 0 30px rgba(150, 180, 140, 0.45),
-                     0 0 60px rgba(180, 220, 170, 0.3);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-        text-shadow: 0 0 15px rgba(130, 160, 120, 0.25);
-    }
-}
-
-@keyframes subtitleFade {
-    0% { opacity: 0; transform: translateY(10px); }
-    100% { opacity: 1; transform: translateY(0); }
-}
-
-.forest-title {
-    /* Start blurred, small, lower, and invisible */
-    opacity: 0;
-    filter: blur(8px);
-    transform: scale(0.75) translateY(25px);
-    
-    /* Initial load animation */
-    animation: forestEntrance 2.4s ease-out forwards;
-
-    /* Enable parallax movement */
-    pointer-events: none;
-}
-
-.forest-title h1,
-.forest-title h3 {
-    text-align: center;
-}
-
-/* Soft mystical glow for main title */
-.forest-title h1 {
-    text-shadow: 
-        0 0 25px rgba(130,160,120,0.35),
-        0 0 50px rgba(160,200,150,0.2);
-}
-
-/* Subtitle fade-in after main reveal */
-.forest-title h3 {
-    opacity: 0;
-    animation: subtitleFade 2.2s ease-out forwards 1.1s;
-}
-
-/* --- Keyframes: Cinematic Entrance --- */
-@keyframes forestEntrance {
+/* Main title animation */
+@keyframes titleGlowIn {
     0% {
         opacity: 0;
         filter: blur(8px);
-        transform: scale(0.75) translateY(25px);
+        transform: scale(0.7) translateY(20px);
+        text-shadow:
+            0 0 8px rgba(200, 255, 200, 0.4),
+            0 0 16px rgba(160, 220, 170, 0.3);
     }
-    40% {
+    50% {
         opacity: 1;
         filter: blur(0px);
         transform: scale(1.08) translateY(0);
         text-shadow:
-            0 0 35px rgba(150,180,140,0.45),
-            0 0 70px rgba(180,220,170,0.3);
-    }
-    65% {
-        transform: scale(0.97);
+            0 0 25px rgba(220, 255, 220, 0.9),
+            0 0 55px rgba(190, 240, 200, 0.85);
     }
     100% {
         opacity: 1;
-        filter: blur(0);
+        filter: blur(0px);
         transform: scale(1);
         text-shadow:
-            0 0 18px rgba(130,160,120,0.25);
+            0 0 18px rgba(210, 250, 210, 0.8);
     }
 }
 
-/* --- Subtitle fade-in --- */
-@keyframes subtitleFade {
-    0% { opacity: 0; transform: translateY(10px); }
-    100% { opacity: 1; transform: translateY(0); }
-}
-
-/* --------------------------------------------- */
-/*   CONTINUOUS “BREATHING” EFFECT               */
-/* --------------------------------------------- */
-
-.forest-title {
-    animation: forestEntrance 2.4s ease-out forwards,
-               breathing 6s ease-in-out infinite 3s;
-}
-
-@keyframes breathing {
-    0%   { transform: scale(1); }
-    50%  { transform: scale(1.015); }
-    100% { transform: scale(1); }
-}
-
-/* --------------------------------------------- */
-/*   PARALLAX DRIFT WITH MOUSE MOVEMENT          */
-/* --------------------------------------------- */
-:root {
-    --tiltX: 0deg;
-    --tiltY: 0deg;
-}
-
-.forest-title {
-    transform-style: preserve-3d;
-    transform: perspective(600px);
-}
-
-.forest-title h1,
-.forest-title h3 {
-    transform: 
-        rotateX(var(--tiltX))
-        rotateY(var(--tiltY));
-    transition: transform 0.1s ease-out;
+/* Subtitle animation — softer but still visible */
+@keyframes subtitleGlowIn {
+    0% {
+        opacity: 0;
+        filter: blur(4px);
+        transform: translateY(10px);
+        text-shadow:
+            0 0 4px rgba(220, 255, 220, 0.3);
+    }
+    100% {
+        opacity: 1;
+        filter: blur(0px);
+        transform: translateY(0);
+        text-shadow:
+            0 0 10px rgba(210, 250, 210, 0.6);
+    }
 }
