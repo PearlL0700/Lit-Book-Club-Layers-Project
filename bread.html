@@ -6,10 +6,14 @@
     <title> Salem Witch Trials </title>
     <link rel = "stylesheet" type = "text/css" href = "style.css">
     <style>
-        .wtimg{
-            padding-left: 450px;
-            width: 540px;
-            height: 350px;
+        .butt{
+            width: 200px;
+            height: 100px;
+            position: absolute;
+            top: 1050px;
+            right: 220px;
+            z-index: 1;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -54,10 +58,9 @@
         meant to protect.
 
     </h5>
-    <img src = "./images/trialImg.png" class = "wtimg"/>
-    <img id = "butt5" src = "./images/Butt1.png" class = "butt1"/>
+    <img id = "butt" src = "./images/Butt1.png" class = "butt"/>
     <script>
-        document.getElementById('butt5').addEventListener('click', function (){
+        document.getElementById('butt').addEventListener('click', function (){
             window.location.href = "./nav.html"
         });
     </script>
